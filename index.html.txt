@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meowtopia - Virtual Cat Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        .cat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .task-complete {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-pink-50 font-sans">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-pink-400 to-purple-500 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-cat text-3xl"></i>
+                <h1 class="text-3xl font-bold">Meowtopia</h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
+                    <i class="fas fa-paw mr-2"></i>
+                    <span id="coin-count" class="font-bold">500</span>
+                </div>
+                <div class="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
+                    <i class="fas fa-heart mr-2 text-red-400"></i>
+                    <span id="heart-count" class="font-bold">3</span>
+                </div>
+                <button class="bg-white text-pink-600 px-4 py-2 rounded-full font-bold hover:bg-pink-100 transition">
+                    <i class="fas fa-user mr-2"></i>My Profile
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Welcome Section -->
+        <section class="mb-12 bg-white rounded-xl shadow-md p-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-6 md:mb-0">
+                    <h2 class="text-4xl font-bold text-pink-600 mb-4">Welcome to Meowtopia!</h2>
+                    <p class="text-gray-700 mb-6">Adopt cute virtual cats, play with them, and complete tasks to earn treats! Your love and care will make your cats happy and healthy.</p>
+                    <div class="flex space-x-4">
+                        <button id="adopt-btn" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full font-bold transition">
+                            <i class="fas fa-plus mr-2"></i>Adopt a Cat
+                        </button>
+                        <button class="border-2 border-pink-500 text-pink-600 px-6 py-3 rounded-full font-bold hover:bg-pink-50 transition">
+                            <i class="fas fa-question-circle mr-2"></i>How to Play
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://i.pinimg.com/originals/0f/9b/3b/0f9b3b7a0f6e8f8e8b0e3e8e8b0e3e8e.png" alt="Cute cartoon cat" class="rounded-xl shadow-lg floating max-w-full h-auto" style="max-height: 300px;">
+                </div>
+            </div>
+        </section>
+
+        <!-- My Cats Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-purple-700 mb-6 flex items-center">
+                <i class="fas fa-paw mr-3"></i>My Cats
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cat Card 1 -->
+                <div class="cat-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img src="https://i.pinimg.com/originals/8b/6b/9f/8b6b9f8b8b8b8b8b8b8b8b8b8b8b8b8.png" alt="Cartoon cat" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                            Level 2
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Whiskers</h3>
+                            <div class="flex">
+                                <i class="fas fa-heart text-red-400 mr-1"></i>
+                                <i class="fas fa-heart text-red-400 mr-1"></i>
+                                <i class="fas fa-heart text-red-400"></i>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-gray-600 text-sm mb-1">Happiness</div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-yellow-400 h-2 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="text-gray-600 text-sm mb-1">Hunger</div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-400 h-2 rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg text-sm font-bold transition">
+                                <i class="fas fa-play mr-1"></i>Play
+                            </button>
+                            <button class="flex-1 bg-pink-500 hover:bg-pink-600 text-white py-2 rounded-lg text-sm font-bold transition">
+                                <i class="fas fa-utensils mr-1"></i>Feed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cat Card 2 -->
+                <div class="cat-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img src="https://i.pinimg.com/originals/9b/9b/9b/9b9b9b9b9b9b9b9b9b9b9b9b9b9b9b.png" alt="Cartoon cat" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                            Level 1
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Mittens</h3>
+                            <div class="flex">
+                                <i class="fas fa-heart text-red-400 mr-1"></i>
+                                <i class="fas fa-heart text-red-400 mr-1"></i>
+                                <i class="fas fa-heart text-gray-300"></i>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text-gray-600 text-sm mb-1">Happiness</div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-yellow-400 h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="text-gray-600 text-sm mb-1">Hunger</div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-400 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg text-sm font-bold transition">
+                                <i class="fas fa-play mr-1"></i>Play
+                            </button>
+                            <button class="flex-1 bg-pink-500 hover:bg-pink-600 text-white py-2 rounded-lg text-sm font-bold transition">
+                                <i class="fas fa-utensils mr-1"></i>Feed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty Cat Slot -->
+                <div class="cat-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-8">
+                    <i class="fas fa-cat text-5xl text-gray-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-500 mb-2">Empty Slot</h3>
+                    <p class="text-gray-500 text-center mb-4">Adopt a new cat to fill this slot!</p>
+                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full font-bold transition">
+                        <i class="fas fa-plus mr-2"></i>Adopt Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-purple-700 mb-6 flex items-center">
+                <i class="fas fa-tasks mr-3"></i>Daily Tasks
+            </h2>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6">
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gray-700">Daily Progress</span>
+                            <span class="text-sm font-bold text-pink-600">2/5 tasks completed</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-pink-500 h-3 rounded-full progress-bar" style="width: 40%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Task 1 - Complete -->
+                        <div class="task-complete p-4 rounded-lg flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Play with Whiskers</h4>
+                                    <p class="text-sm text-gray-600">Play for at least 5 minutes</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">
+                                +50 coins
+                            </div>
+                        </div>
+
+                        <!-- Task 2 - Complete -->
+                        <div class="task-complete p-4 rounded-lg flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Feed Mittens</h4>
+                                    <p class="text-sm text-gray-600">Give your cat some food</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">
+                                +30 coins
+                            </div>
+                        </div>
+
+                        <!-- Task 3 - Incomplete -->
+                        <div class="p-4 rounded-lg flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                                    <i class="fas fa-paw text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Pet both cats</h4>
+                                    <p class="text-sm text-gray-600">Show some love to your feline friends</p>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                +20 coins
+                            </div>
+                        </div>
+
+                        <!-- Task 4 - Incomplete -->
+                        <div class="p-4 rounded-lg flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                                    <i class="fas fa-camera text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Take a photo</h4>
+                                    <p class="text-sm text-gray-600">Capture a cute moment</p>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                +15 coins
+                            </div>
+                        </div>
+
+                        <!-- Task 5 - Incomplete -->
+                        <div class="p-4 rounded-lg flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                                    <i class="fas fa-shopping-cart text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Buy a new toy</h4>
+                                    <p class="text-sm text-gray-600">Visit the shop and purchase an item</p>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                +40 coins
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section>
+            <h2 class="text-3xl font-bold text-purple-700 mb-6 flex items-center">
+                <i class="fas fa-store mr-3"></i>Cat Shop
+            </h2>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6">
+                    <div class="flex overflow-x-auto pb-4 space-x-4">
+                        <!-- Food Tab -->
+                        <button class="shop-tab active bg-pink-500 text-white px-6 py-2 rounded-full font-bold whitespace-nowrap">
+                            <i class="fas fa-utensils mr-2"></i>Food
+                        </button>
+                        <!-- Toys Tab -->
+                        <button class="shop-tab bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-bold hover:bg-gray-300 transition whitespace-nowrap">
+                            <i class="fas fa-baseball mr-2"></i>Toys
+                        </button>
+                        <!-- Accessories Tab -->
+                        <button class="shop-tab bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-bold hover:bg-gray-300 transition whitespace-nowrap">
+                            <i class="fas fa-tshirt mr-2"></i>Accessories
+                        </button>
+                        <!-- Cats Tab -->
+                        <button class="shop-tab bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-bold hover:bg-gray-300 transition whitespace-nowrap">
+                            <i class="fas fa-cat mr-2"></i>New Cats
+                        </button>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Food Item 1 -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                            <img src="https://i.pinimg.com/originals/5a/5a/5a/5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a.png" alt="Cat food" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h4 class="font-bold text-gray-800 mb-1">Tuna Delight</h4>
+                                <p class="text-sm text-gray-600 mb-3">Premium tuna flavor cat food</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                                        <span class="font-bold">25</span>
+                                    </div>
+                                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold transition">
+                                        Buy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Food Item 2 -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                            <img src="https://i.pinimg.com/originals/6a/6a/6a/6a6a6a6a6a6a6a6a6a6a6a6a6a6a6a.png" alt="Cat food" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h4 class="font-bold text-gray-800 mb-1">Salmon Feast</h4>
+                                <p class="text-sm text-gray-600 mb-3">Nutritious salmon recipe</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                                        <span class="font-bold">35</span>
+                                    </div>
+                                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold transition">
+                                        Buy
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Food Item 3 -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                            <img src="https://i.pinimg.com/originals/7a/7a/7a/7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a.png" alt="Cat food" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h4 class="font-bold text-gray-800 mb-1">Chicken Dinner</h4>
+                                <p class="text-sm text-gray-600 mb-3">Tender chicken pieces</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                                        <span class="font-bold">20</span>
+                                    </div>
+                                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold transition">
+                                        Buy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Food Item 4 -->
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                            <img src="https://i.pinimg.com/originals/8a/8a/8a/8a8a8a8a8a8a8a8a8a8a8a8a8a8a8a.png" alt="Cat food" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h4 class="font-bold text-gray-800 mb-1">Gourmet Buffet</h4>
+                                <p class="text-sm text-gray-600 mb-3">Variety pack for picky eaters</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-coins text-yellow-500 mr-1"></i>
+                                        <span class="font-bold">50</span>
+                                    </div>
+                                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-bold transition">
+                                        Buy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Adopt Cat Modal -->
+    <div id="adopt-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-pink-600">Adopt a New Cat</h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <img src="https://i.pinimg.com/originals/3a/3a/3a/3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a.png" alt="Adoptable cartoon cat" class="w-full rounded-lg mb-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-1">Name</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Give your cat a name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-1">Breed</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                                <option>Tabby</option>
+                                <option>Siamese</option>
+                                <option>Persian</option>
+                                <option>Maine Coon</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between">
+                    <button class="border-2 border-pink-500 text-pink-600 px-6 py-2 rounded-full font-bold hover:bg-pink-50 transition">
+                        <i class="fas fa-paw mr-2"></i>Meet Another
+                    </button>
+                    <button class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full font-bold transition">
+                        <i class="fas fa-home mr-2"></i>Adopt Now (100 coins)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-pink-400 to-purple-500 text-white mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-cat mr-2"></i>Meowtopia
+                    </h3>
+                    <p class="text-sm">A virtual world where you can adopt and care for adorable cats. Complete tasks to earn rewards!</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:underline">Home</a></li>
+                        <li><a href="#" class="hover:underline">My Cats</a></li>
+                        <li><a href="#" class="hover:underline">Tasks</a></li>
+                        <li><a href="#" class="hover:underline">Shop</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Help</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:underline">FAQ</a></li>
+                        <li><a href="#" class="hover:underline">Contact Us</a></li>
+                        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:underline">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                    <p class="text-sm">Subscribe to our newsletter for updates!</p>
+                </div>
+            </div>
+            <div class="border-t border-white border-opacity-20 mt-8 pt-6 text-center text-sm">
+                <p>&copy; 2023 Meowtopia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Adopt modal functionality
+        const adoptBtn = document.getElementById('adopt-btn');
+        const adoptModal = document.getElementById('adopt-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        adoptBtn.addEventListener('click', () => {
+            adoptModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+            adoptModal.classList.add('hidden');
+        });
+
+        // Shop tab functionality
+        const shopTabs = document.querySelectorAll('.shop-tab');
+        shopTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                shopTabs.forEach(t => t.classList.remove('active', 'bg-pink-500', 'text-white'));
+                shopTabs.forEach(t => t.classList.add('bg-gray-200', 'text-gray-700'));
+                tab.classList.remove('bg-gray-200', 'text-gray-700');
+                tab.classList.add('active', 'bg-pink-500', 'text-white');
+            });
+        });
+
+        // Task completion functionality
+        const tasks = document.querySelectorAll('.p-4.rounded-lg:not(.task-complete)');
+        tasks.forEach(task => {
+            task.addEventListener('click', function() {
+                // Mark as complete
+                this.classList.add('task-complete');
+                
+                // Update progress bar
+                const progressBar = document.querySelector('.progress-bar');
+                const currentWidth = parseInt(progressBar.style.width) || 40;
+                progressBar.style.width = (currentWidth + 20) + '%';
+                
+                // Update task count
+                const taskCount = document.querySelector('.text-pink-600');
+                const [completed, total] = taskCount.textContent.split('/').map(Number);
+                taskCount.textContent = `${completed + 1}/${total}`;
+                
+                // Update coins
+                const coinCount = document.getElementById('coin-count');
+                const reward = parseInt(this.querySelector('.bg-yellow-100').textContent.match(/\d+/)[0]);
+                coinCount.textContent = parseInt(coinCount.textContent) + reward;
+                
+                // Add check icon
+                const iconContainer = this.querySelector('.w-8.h-8');
+                iconContainer.classList.remove('bg-gray-200');
+                iconContainer.classList.add('bg-green-100');
+                iconContainer.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+                
+                // Change reward display
+                const rewardDisplay = this.querySelector('.bg-yellow-100');
+                rewardDisplay.classList.remove('bg-yellow-100', 'text-yellow-800');
+                rewardDisplay.classList.add('bg-green-100', 'text-green-800');
+            });
+        });
+
+        // Cat card interaction
+        const feedButtons = document.querySelectorAll('.cat-card button:last-child');
+        feedButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const hungerBar = this.closest('.cat-card').querySelector('.bg-red-400');
+                const currentWidth = parseInt(hungerBar.style.width) || 0;
+                hungerBar.style.width = Math.min(currentWidth + 30, 100) + '%';
+                
+                // Deduct coins for feeding
+                const coinCount = document.getElementById('coin-count');
+                const currentCoins = parseInt(coinCount.textContent);
+                if (currentCoins >= 20) {
+                    coinCount.textContent = currentCoins - 20;
+                } else {
+                    alert("Not enough coins! Complete tasks to earn more.");
+                }
+            });
+        });
+
+        const playButtons = document.querySelectorAll('.cat-card button:first-child');
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const happinessBar = this.closest('.cat-card').querySelector('.bg-yellow-400');
+                const currentWidth = parseInt(happinessBar.style.width) || 0;
+                happinessBar.style.width = Math.min(currentWidth + 20, 100) + '%';
+                
+                // Increase hearts if happiness is full
+                if (parseInt(happinessBar.style.width) >= 100) {
+                    const heartIcons = this.closest('.cat-card').querySelectorAll('.fa-heart');
+                    for (let i = 0; i < heartIcons.length; i++) {
+                        if (heartIcons[i].classList.contains('text-gray-300')) {
+                            heartIcons[i].classList.remove('text-gray-300');
+                            heartIcons[i].classList.add('text-red-400');
+                            break;
+                        }
+                    }
+                    
+                    // Update global heart count
+                    const heartCount = document.getElementById('heart-count');
+                    heartCount.textContent = parseInt(heartCount.textContent) + 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
